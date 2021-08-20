@@ -29,6 +29,11 @@ export GITHUB_TOKEN=$API_TOKEN_GITHUB
 git config --global user.email "$INPUT_USER_EMAIL"
 git config --global user.name "$INPUT_USER_NAME"
 
+git_hash=$(git rev-parse --short "$GITHUB_SHA")
+git_branch=${GITHUB_REF#refs/heads/}
+echo ">>>git_hash=${git_hash}"
+echo ">>>git_branch=${git_branch}"
+
 echo "Cloning destination git repository"
 git clone "https://$API_TOKEN_GITHUB@github.com/$INPUT_DESTINATION_REPO.git" "$CLONE_DIR"
 
@@ -55,7 +60,4 @@ else
   echo "No changes detected"
 fi
 
-git_hash=$(git rev-parse --short "$GITHUB_SHA")
-git_branch=${GITHUB_REF#refs/heads/}
-echo ">>>git_hash=${git_hash}"
-echo ">>>git_branch=${git_branch}"
+
